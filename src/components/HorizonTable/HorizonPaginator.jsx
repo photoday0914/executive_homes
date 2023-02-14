@@ -1,0 +1,94 @@
+import React from "react";
+
+import { TextField } from "@material-ui/core";
+import { HorizonButton } from "../../components"
+
+export const HorizonPaginator = props => {
+  const {
+    pageCount,
+    canPreviousPage,
+    canNextPage,
+    previousPage,
+    nextPage,
+    gotoPage
+  } = props.table;
+  let pageIndex = 0
+  
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "stretch",
+        justifyContent: "space-between",
+        padding: "16px"
+      }}
+    >
+      <HorizonButton
+        id="paginator-previous-btn"
+        color="primary"
+        disabled={!canPreviousPage}
+        onClick={previousPage}
+        style={{
+          maxWidth: "250px",
+          width: "100%"
+        }}
+      >
+        Previous
+      </HorizonButton>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          fontSize: "24px"
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            fontSize: "24px"
+          }}
+        >
+          <span
+            style={{
+              marginRight: "8px"
+            }}
+          >
+            Page
+          </span>
+          <TextField
+            type="number"
+            variant="outlined"
+            value={pageIndex + 1}
+            id="paginator-change-page-field"
+            onChange={e => {
+              const page = Number(e.target.value)
+                ? Number(e.target.value) - 1
+                : 0;
+              gotoPage(page);
+            }}
+          />
+          <span
+            style={{
+              marginLeft: "8px"
+            }}
+          >
+            of {props.data.length > 0 ? pageCount : 1}
+          </span>
+        </div>
+      </div>
+      <HorizonButton
+        id="paginator-next-btn"
+        style={{
+          maxWidth: "300px",
+          width: "100%"
+        }}
+        color="primary"
+        disabled={!canNextPage}
+        onClick={nextPage}
+      >
+        Next
+      </HorizonButton>
+    </div>
+  );
+};
